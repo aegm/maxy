@@ -1,0 +1,60 @@
+<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Maxy Boutique</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <link rel="stylesheet" href="{ROOT_URL}css/style.css">
+    <link media="all" type="text/css" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.13/themes/vader/jquery-ui.css" rel="stylesheet">
+    <link rel="stylesheet" href="{ROOT_URL}css/bootstrap.css">
+    <link rel="stylesheet" href="{ROOT_URL}css/form.css">
+</head>
+<body>
+    <header style="padding-top: 95px;">
+        <h1 data-slug="our-work" data-class="home" style="display: block;"><a href="./Woodwork_files/Woodwork.htm">Woodwork</a></h1>
+        <h2>24 frames per second. One detail at a time.</h2>
+        <nav style="display: block;">
+            <ul>
+                <li><a href="./Woodwork_files/Woodwork.htm" id="our-work" class="active" title="Our work">Bienvenidos</a></li>
+                <li><a href="http://woodwork.nl/showreel/" id="showreel" class="" title="Showreel">Tienda</a></li>
+                <li><a href="http://woodwork.nl/about/" id="about" class="" title="About">Recomendaciones</a></li>
+                {MENU}
+                <li class="dropdown">
+                    <a class="dropdown-toggle" href="#" data-toggle="dropdown">Ingresar<strong class="caret"></strong></a>
+                    <div class="dropdown-menu" style="padding: 15px; padding-bottom: 0px;">
+                      <!-- Login form here -->
+                       {FORMULARIOS}
+                    </div>
+                </li>
+               
+            </ul>
+            
+            <div id="nav-pointer" style="top: 16px;">
+                <div id="pointer-left" style="left: 86px;"></div>
+                <div id="pointer-right" style="left: 179px;"></div>
+            </div>
+        </nav>
+
+        <div id="social">
+            <a href="http://vimeo.com/woodwork" target="_blank" class="vimeo"><span>Vimeo</span></a>
+            <a href="https://www.facebook.com/studiowoodwork" target="_blank" class="facebook"><span>Facebook</span></a>
+            <a href="https://twitter.com/studiowoodwork" target="_blank" class="twitter"><span>Twitter</span></a>
+        </div>
+    </header>
+    <!--------------------------CONTENIDO DE LA PAGINA ----------------------------->
+    <div id="main" role="main">
+        {CONTENIDO}
+    </div>
+    <script src="{ROOT_URL}/lib/js/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.13/jquery-ui.min.js" type="text/javascript"></script>
+    <script src="{ROOT_URL}/lib/js/jquery.masonry.min.js"></script>
+    <script src="{ROOT_URL}/lib/js/plugins.js"></script>
+    <script src="{ROOT_URL}/lib/js/main.js"></script>
+    <script src="{ROOT_URL}/lib/js/general.js" type="text/javascript"></script>
+    <script src="{ROOT_URL}/lib/js/bootstrap-dropdown.js" type="text/javascript"></script>
+    {JS}
+</body>
+</html>
