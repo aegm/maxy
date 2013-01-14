@@ -22,10 +22,14 @@
 	$matriz['DESCRIPTION']="";
 	$matriz['BODY']="inicio";
 	$matriz['JS'].="";
+        $matriz['CSS'] .= $html->html("../html/css.html",array("href"=>"../css/form.css","media"=>"all"));
 	
 	/********************************************* CONTENIDO *******************************************/	
 	//formulario de busqueda
-        $array['FORMULARIO'] = formulario_html("filtro_productos");
+        $array['ROOT_URL'] = ROOT_URL;  
+        $array['FORMULARIO'] = formulario_html("frm_filtro");
+        //FORMULARIO PARA AGREGAR PRODUCTO
+        $array['FORMULARIO_AGREGAR'] = formulario_html("frm_agregar");
         
         
         $matriz['CONTENIDO'] = $html->html("html/$archivo.html",$array);

@@ -3,6 +3,10 @@
 require_once('dbi.class.php');
 require_once('dbi.result.class.php');
 
+
+//require_once('../../../lib/clases/notifica.class.php');
+define("SISTEMA","MX");
+define("STANDBY","15");
 class usuario
 {
 	private $db;
@@ -145,7 +149,88 @@ class usuario
 		}
 	}
 	//***********************************************************************************************************
-	public function perfil($id_persona)
+	public function registro_condicionado($id_persona,$id_grupo,$usuario,$clave)
+	{	
+            $this->msgTitle = "Registro de usuario";
+		if(!$id_persona)
+		{
+			$this->mensaje="Debe especificar una persona";
+			$this->msgTipo="aviso";
+			$this->estatus = false;
+			$this->json=json_encode($this);
+			return $this->estatus;
+		}         
+		if(!$usuario)
+		{
+			$this->mensaje="Los campos con (*) son obligatorios...";
+			$this->msgTipo="aviso";
+			$this->estatus = false;
+			$this->json=json_encode($this);
+			return $this->estatus;
+		}                
+		if(!preg_match("/^[a-z]([0-9a-z_])+$/i",$usuario)){
+			$this->mensaje="El nombre de usuario tiene que ser de minimo 2 caracteres contener solo letras, numeros y _";
+			$this->msgTipo="aviso";
+			$this->estatus = false;
+			$this->json=json_encode($this);
+			return $this->estatus;
+		}              
+		if(!$clave)
+		{
+			$this->mensaje="Indique una clave, por favor...";
+			$this->msgTipo="aviso";
+			$this->estatus = false;
+			$this->json=json_encode($this);
+			return $this->estatus;
+		}               
+		$this->db = new db;
+			
+		$pass = md5($clave);
+		$now = strtotime("now");
+		
+		$this->db->query("INSERT INTO usuarios(
+								id_persona,
+								id_grupo,
+								usuario,
+								clave,
+								fecha_registro,
+								ultima_entrada
+								)VALUES(
+								'$id_persona',
+								'$id_grupo',
+								'$usuario',
+								'$pass',
+								'$now',
+								'$now')");
+				
+                if(!$this->db->errno)
+		{
+			$this->msgTipo="ok";
+			$this->mensaje="Se ha registrado el usuario correctamente...";
+			$this->estatus = true;
+			$this->json=json_encode($this);
+			return $this->estatus;
+		}
+		
+		if($this->db->errno==1062)
+		{
+			$this->msgTipo="error";
+			$this->mensaje="Esta persona ya se encuentra registrado, por favor verifique sus datos";
+			$this->estatus = false;
+			$this->json=json_encode($this);
+			return $this->estatus;
+		}
+		else
+		{
+			$this->mensaje="No te pudimos registrar en este momento, por favor intenta mas tarde... Disculpe las molestias causadas.";
+			$this->msgTipo="error";
+			$this->estatus = false;
+			$this->json=json_encode($this);
+			return $this->estatus;
+		}
+	}
+	//***********************************************************************************************************
+        public function perfil($id_persona)
 	{
 		if(!$id_persona)
 		{
@@ -280,7 +365,7 @@ class usuario
 	public function inactivar($id_persona,$estatus)//el estatus que se desea colocar
 	{
 		$this->db = new db;
-			$cambiar = $this->db->query("UPDATE user SET estatus='$estatus' WHERE id_historia='$id_persona'");
+			$this->db->query("UPDATE usuarios SET estatus='$estatus' WHERE id_persona='$id_persona'");
 			$this->mensaje="El usuario ha sido Inactivado";
 			$this->msgTipo="ok";
 			$this->estatus = true;
@@ -289,21 +374,26 @@ class usuario
 	}
 	//***********************************************************************************************************
 	
-	public function login($id, $clave)
+	public function login($user, $clave)
 	{
 		$this->msgTitle="Usuario - iniciar sesión";
-		
 		$this->db = new db;
-		$usuarios = $this->db->query("SELECT * FROM vusuarios WHERE usuario='$id' AND clave='$clave'");
-		if($usuario =$usuarios->fetch_assoc())
+		
+		$usuarios=$this->db->query("SELECT * FROM vuser WHERE usuario='$user' AND clave='$clave'");
+		if($usuario=$usuarios->fetch_assoc())
 		{	
-			$this->id=$_SESSION[SISTEMA]['id_persona']=$usuario['id'];
-			$this->identificacion=$_SESSION[SISTEMA]['identificacion']=$usuario['usr_cod'];
+			
+			$this->id_persona=$_SESSION[SISTEMA]['id_persona']=$usuario['id_persona'];
+			$this->identificacion=$_SESSION[SISTEMA]['identificacion']=$usuario['identificacion'];
 			$this->id_grupo=$_SESSION[SISTEMA]['id_grupo']=$usuario['id_grupo'];
-			$this->usuario=$_SESSION[SISTEMA]['usuario']=$usuario['usr'];
+			$this->usuario=$_SESSION[SISTEMA]['usuario']=$usuario['usuario'];
 			$this->grupo=$_SESSION[SISTEMA]['grupo']=$usuario['grupo'];
 			$this->nombre=$_SESSION[SISTEMA]['nombre']=$usuario['nombre'];
+			$this->apellido=$_SESSION[SISTEMA]['apellido']=$usuario['apellido'];
 			$this->session=$_SESSION[SISTEMA]['session'] = true;
+			$fecha=strtotime("now");
+			
+			$this->db->query("UPDATE usuarios set ultima_entrada='$fecha' WHERE id_persona='$this->id_persona' AND usuario='$user'");
 			
 			$this->mensaje="Se ha iniciado session correctamente...";
 			$this->msgTipo="ok";
@@ -338,7 +428,8 @@ class usuario
 		$this->usuario=$_SESSION[SISTEMA]['usuario'];
 		$this->grupo=$_SESSION[SISTEMA]['grupo'];
 		$this->nombre=$_SESSION[SISTEMA]['nombre'];
-                $this->session=$_SESSION[SISTEMA]['session'];	
+		$this->apellido=$_SESSION[SISTEMA]['apellido'];
+		$this->session=$_SESSION[SISTEMA]['session'];
 		$this->mensaje="Se cargo el usuario desde la session...";
 		$this->msgTipo="ok";
 		$this->estatus = true;
@@ -363,38 +454,6 @@ class usuario
 			return $this->estatus;
 		}
 	}
-        public function editar($id_persona,$correo,$clave_anterior,$clave_nueva)
-        {
-            if(!$id_persona)
-		{
-			$this->mensaje="es requerido el id de la persona...";
-			$this->msgTipo="aviso";
-			$this->estatus = false;
-			$this->json=json_encode($this);
-			return $this->estatus;
-		}
-                
-                $this->db = new db;
-		//-------confirmacion del usuario
-                $verificar = $this->db->query("select * from user where id_historia = '$id_persona' and clave = '$clave_anterior'");
-                
-                if($verificar->num_rows)
-		{
-		$datos_persona=$this->db->query("UPDATE persona_historia p, user u SET p.correo = '$correo', u.clave = '$clave_nueva' where p.id = u.id_historia and p.id = '$id_persona'");
-		
-                    $this->msgTipo="ok";
-			$this->mensaje="Se han actualizado los datos del perfil correctamente....";
-			$this->estatus = true;
-			$this->datos=$datos_persona->fetch_assoc();
-			$this->json=json_encode($this);
-			return $this->estatus;
-		}
-		$this->msgTipo="ok";
-		$this->mensaje="Error al tratar de actualizar los datos de usuario...";
-		$this->estatus = false;
-		$this->json=json_encode($this);
-		return $this->estatus;
-        }
 	//***********************************************************************************************************
 	public function recuperar_clave($correo)
 	{
@@ -496,21 +555,6 @@ class usuario
                 $this->json = json_encode($this);
 		return $this->estatus;
 	}
-        public function listar()
-        {
-            $this->db = new db;
-            $listado = $this->db->query("select * from vuser");
-            if ($listado->num_rows)
-            {
-                while($listar = $listado->fetch_assoc())
-                {
-                $this->datos['usuarios'][] = $listar;
-                $this->mensaje = "se han listado los usuarios";
-                $this->estatus = true;
-                return $this->estatus;
-                }
-            }
-        }
 	//***********************************************************************************************************
 	public function session()
 	{

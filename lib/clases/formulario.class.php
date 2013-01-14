@@ -55,7 +55,7 @@ class formulario
 	{
 		$this->msgTitle = "Mostrar Formulario";
 		
-		$formularios = $this->db->query("SELECT * FROM formularios_web WHERE id='$id'");
+		$formularios = $this->db->query("SELECT * FROM formularios WHERE id='$id'");
 		if(!$formularios->num_rows)
 		{
 			$this->mensaje = "No se encontraron registros...";

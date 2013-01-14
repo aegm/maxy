@@ -1,8 +1,8 @@
 .form .externo{
 	 border: none;
-    margin: 0 auto;
-	 padding:0px;
-    width: 100%;
+    /*margin: 0 auto;*/
+	 padding:2%;
+    width: 80%;
 }
 .form .interno{
 	border-radius:6px;
@@ -13,10 +13,11 @@
 .form legend{
 	font-size:14px;
 	font-weight:bold;
-	color:#0099FF;
+	color:#551a8b;
 }
 .form p{
 	margin:2px auto;
+        float: left;
 }
 .form label{
 	display:block;
@@ -26,9 +27,10 @@
 	font-size: 12px;
 	font-weight: bold;
 	width: 125px;
+        font-family: "Courier New";
 }
 .form .text, .form textarea{
-	font-family:Verdana, Geneva, sans-serif;
+	/*font-family:Verdana, Geneva, sans-serif;*/
 	border:1px solid #666;
 	width:200px;
 	font-size:12px;
@@ -40,12 +42,13 @@
 	border:1px solid #666;
 }
 .form option{
-	font-family:Verdana, Geneva, sans-serif;
+	font-family:"Courier New";
 	font-size:12px;
 	margin:5px;
 }
 .form .for-submit{
 	margin:10px;
+        text-align: left;
 }
 .form span.for-info{
 	display:block;

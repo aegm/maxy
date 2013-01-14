@@ -170,7 +170,7 @@
 	}
 	function incluir_lib($archivo,$tipo="")
 	{
-            if(!$tipo)
+		if(!$tipo)
 			$tipo = extension($archivo);
 			
 		$ht =  new plantilla;
@@ -270,9 +270,9 @@
 		}
 		return $rstr;
 	}
-	function formulario_html($id,$datos="",$direccion)
+	function formulario_html($id,$datos="")
 	{
-            	$html_form = "";
+		$html_form = "";
 		$html = new plantilla;
 		$form = new formulario;
 		if(!$form->mostrar($id))
@@ -289,87 +289,62 @@
 			$html_fieldset = "";
 			foreach($formulario['fieldsets'] as $fieldset)
 			{
-                            $html_campos = "";
-                            $fieldset['LEGEND'] = "";
-                            
-                            
-                            foreach($fieldset['campos'] as $campo)
+				$html_campos = "";
+				foreach($fieldset['campos'] as $campo)
 				{
 					if(isset($datos[$campo['id']]))
 						$campo['value'] = $datos[$campo['id']];
 						
-					$campo['LABEL'] = ucfirst($campo['LABEL']);
-					$campo['SOLO_LECTURA'] = $campo['SOLO_LECTURA']?" readonly":"";
-					$campo['OBLIGATORIO'] = $campo['OBLIGATORIO']?" required":"";
-                                        $campo['MARCAR'] = $campo['OBLIGATORIO']?"(*)":"";
-					$campo['DESHABILITADO'] = $campo['DESHABILITADO']?" disabled":"";
-                                        $fieldset['LEGEND'] = $campo['LEGEND'];
-                                        
-                                        
-                                        if ($campo['TIPO'] == "text"){
-                                        $campo['ESTYLE'] =   $campo['ESTYLE']="add-on";
-                                        }else
-                                            if ($campo['TIPO'] == "radio"){
-                                        $campo['ESTYLE'] =   $campo['ESTYLE']="label label-important";
-                                        }
-                                        
-                                        if ($campo['TIPO'] == "radio" && isset ($campo['INFO']))
-                                        $campo['ETIQUETA'] = $html->html(ROOT_DIR."html/etiqueta.html",array("ETIQUETA"=>$campo['INFO']));
-					//************************adicionales***********************/
+					$campo['label'] = ucfirst($campo['label']);
+					$campo['solo_lectura'] = $campo['solo_lectura']?" readonly":"";
+					$campo['obligatorio'] = $campo['obligatorio']?" (*)":"";
+					$campo['deshabilitado'] = $campo['deshabilitado']?" disabled":"";
+					/************************adicionales***********************/
 					
-                                        $adicionales_html = "";
+					$adicionales_html = "";
+					if($campo['adicionales'])
 						foreach($campo['adicionales'] as $adicional)
 						{
-                                                    if (!empty($adicional)){
-                                                    $adicional['DESHABILITADO'] = $adicional['DESHABILITADO']?" disabled":"";
-							$adicionales_html .= $html->html(ROOT_DIR."html/".$adicional['TYPE_CAMPO'].".html",$adicional);
-                                                    }
+							$adicional['deshabilitado'] = $adicional['deshabilitado']?" disabled":"";
+							$adicionales_html .= $html->html(ROOT_DIR."html/".$adicional['type'].".html",$adicional);
 						}
-					$campo['ADICIONALES'] = $adicionales_html;
-					//**************************en el caso de que sea Una Etiqueta Lateral***********************************/
-					
-                                        
-                                        if($campo['TIPO']=="textarea")
+							
+					$campo['adicionales'] = $adicionales_html;
+					//*********************************************************************/
+					if($campo['tipo']=="textarea")
 					{
 						$html_campos .= $html->html(ROOT_DIR."html/form_textarea.html",$campo);
-                                        }
-                                        else
-                                            if($campo['TIPO']=="select")
+					}
+					elseif($campo['tipo']=="select")
 					{	
 						$campo['options'] = "";
-						if($campo['DATOS'])
+						if($campo['datos']!="")
 						{
-                                                    $campo['options'] = $html->html(ROOT_DIR."html/form_option.html",array("UADMIN"=>"","UADMIN_DES"=>"Seleccione","selected"=>""));
+							$campo['options'] = $html->html(ROOT_DIR."html/form_option.html",array("value"=>"","nombre"=>"Seleccione","selected"=>""));
 							foreach($campo['datos'] as $dato)
-							{							
-                                                               $dato['selected'] = "";
-								if(isset($dato[$campo['DATOS_VALUE']]) && $dato[$campo['DATOS_VALUE']] == $direccion)
+							{
+								$dato['selected'] = "";
+								if(isset($datos[$campo['datos_value']]) && $datos[$campo['datos_value']] == $dato['value'])
 									$dato['selected'] = "selected";
 								$campo['options'] .= $html->html(ROOT_DIR."html/form_option.html",$dato);
 							}
 						}
-                                                	
-						if(isset($dato['select'][$campo['UADMIN']]))
-						{	
-                                                    $campo['options'] .= $html->html(ROOT_DIR."html/form_option.html",array("UADMIN"=>"","UADMIN_DES"=>"Seleccione","selected"=>""));
-						
-                                                        foreach($dato['select'][$campo['UADMIN']] as $dato)
+						if(isset($datos['select'][$campo['id']]))
+						{
+							$campo['options'] = $html->html(ROOT_DIR."html/form_option.html",array("value"=>"","nombre"=>"Seleccione","selected"=>""));
+							foreach($datos['select'][$campo['id']] as $dato)
 								$campo['options'] .= $html->html(ROOT_DIR."html/form_option.html",$dato);
 						}
-                                                
 						$html_campos .= $html->html(ROOT_DIR."html/form_select.html",$campo);
 					}
 					else
-					    $html_campos .= $html->html(ROOT_DIR."html/form_campo.html",$campo);
-                                        
+						$html_campos .= $html->html(ROOT_DIR."html/form_campo.html",$campo);
 				}
-				
-                                $fieldset['campos'] = $html_campos;
+				$fieldset['campos'] = $html_campos;
 				$html_fieldset .= $html->html(ROOT_DIR."html/form_fieldset.html",$fieldset);
-                                
 			}
 			/************************* Hiddens ***********************/
-                        $formulario['campos_ocultos'] = "";
+			$formulario['campos_ocultos'] = "";
 			if(isset($formulario['hiddens']) && $formulario['hiddens'])
 				foreach($formulario['hiddens'] as $campo_hidden)
 					$formulario['campos_ocultos'] .= $html->html(ROOT_DIR."html/form_hidden.html",$campo_hidden);
@@ -380,16 +355,15 @@
 			if($formulario['botones'])
 				foreach($formulario['botones'] as $boton)
 				{
-					
-                                        $boton['deshabilitado'] = $boton['deshabilitado']?" disabled":"";
+					$boton['deshabilitado'] = $boton['deshabilitado']?" disabled":"";
 					$html_boton .= $html->html(ROOT_DIR."html/form_boton.html",$boton);
 				}
 			$formulario['botones'] = $html_boton;
-                      
+			
 			/**********************************************************/
 			$formulario['fieldsets'] = $html_fieldset;
 			$html_form .= $html->html(ROOT_DIR."html/form.html",$formulario);
-                        }
+		}
 		return $html_form;
 	}
 ?>
