@@ -383,7 +383,7 @@ class usuario
 		if($usuario=$usuarios->fetch_assoc())
 		{	
 			
-			$this->id_persona=$_SESSION[SISTEMA]['id_persona']=$usuario['id_persona'];
+                        $this->id_persona=$_SESSION[SISTEMA]['id_persona']=$usuario['id_persona'];
 			$this->identificacion=$_SESSION[SISTEMA]['identificacion']=$usuario['identificacion'];
 			$this->id_grupo=$_SESSION[SISTEMA]['id_grupo']=$usuario['id_grupo'];
 			$this->usuario=$_SESSION[SISTEMA]['usuario']=$usuario['usuario'];
@@ -391,9 +391,7 @@ class usuario
 			$this->nombre=$_SESSION[SISTEMA]['nombre']=$usuario['nombre'];
 			$this->apellido=$_SESSION[SISTEMA]['apellido']=$usuario['apellido'];
 			$this->session=$_SESSION[SISTEMA]['session'] = true;
-			$fecha=strtotime("now");
 			
-			$this->db->query("UPDATE usuarios set ultima_entrada='$fecha' WHERE id_persona='$this->id_persona' AND usuario='$user'");
 			
 			$this->mensaje="Se ha iniciado session correctamente...";
 			$this->msgTipo="ok";

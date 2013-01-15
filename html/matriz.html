@@ -10,17 +10,17 @@ and open the template in the editor.
     <link rel="stylesheet" href="{ROOT_URL}css/style.css">
     <link media="all" type="text/css" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.13/themes/vader/jquery-ui.css" rel="stylesheet">
     <link rel="stylesheet" href="{ROOT_URL}css/bootstrap.css">
-    <link rel="stylesheet" href="{ROOT_URL}css/form.css">
+    {CSS}
+    {JS}
 </head>
 <body>
+     <div id="{MSGTIPO}" title="{MSGTITLE}" class="mensaje">{MENSAJE}</div>
     <header style="padding-top: 95px;">
         <h1 data-slug="our-work" data-class="home" style="display: block;"><a href="./Woodwork_files/Woodwork.htm">Woodwork</a></h1>
         <h2>24 frames per second. One detail at a time.</h2>
         <nav style="display: block;">
             <ul>
-                <li><a href="./Woodwork_files/Woodwork.htm" id="our-work" class="active" title="Our work">Bienvenidos</a></li>
-                <li><a href="http://woodwork.nl/showreel/" id="showreel" class="" title="Showreel">Tienda</a></li>
-                <li><a href="http://woodwork.nl/about/" id="about" class="" title="About">Recomendaciones</a></li>
+                <li><a href="#" id="our-work" class="active" title="Our work">Bienvenidos</a></li>
                 {MENU}
                 <li class="dropdown">
                     <a class="dropdown-toggle" href="#" data-toggle="dropdown">Ingresar<strong class="caret"></strong></a>

@@ -62,7 +62,7 @@
 	
 	$nav['MENU']="";
 	if($menu->datos)
-		foreach($menu->datos as $item)
+            foreach($menu->datos as $item)
 		{
 			if($item['url'] != "#")
 				$item['url'] =  ROOT_URL.$item['url'];
@@ -88,7 +88,7 @@
 				/*if($permiso->datos[basename($item['url'])]['ver'])*/
 					$nav['MENU'] .= $html->html("../html/menu.html",$item);
 			}
-                         $matriz['MENU'] = $html->html("../html/menu.html",$item);
+                         $matriz['MENU'] .= $html->html("../html/menu.html",$item);
 		}
 	/*	$consola['CONSOLA']="";
 	$consola['CONSOLA'].="*******************menu*******************\n\n".print_r($menu->datos,true);
@@ -151,7 +151,7 @@
 			$i['icon']="ui-icon-circle-check";
 		if($_SESSION['msgTipo']=="info")
 			$i['icon']="ui-icon-info";
-		$matriz['MENSAJE']=$html->html('html/i.html',$i).$_SESSION['mensaje'];
+		$matriz['MENSAJE']=$html->html('../html/i.html',$i).$_SESSION['mensaje'];
 		$matriz['MSGTIPO']=$_SESSION['msgTipo'];
 		$matriz['MSGTITLE']=$_SESSION['msgTitle'];
 		unset($_SESSION['mensaje']);

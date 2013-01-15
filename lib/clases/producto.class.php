@@ -16,21 +16,27 @@ class producto
 	}
 	//*****************************************************
 	
-        public function guardar($txt_nombre, $txt_descripcion, $fecha_inicio, $fecha_fin, $slt_docente, $slt_precio, $slt_libro,$slt_tipo)
+        public function guardar($slt_categoria,$txt_producto,$txt_costo,$slt_talla,$txt_color,$txt_cod_pro)
         {
             
-            $sql = $this->db->query("INSERT INTO curso (nombre, fecha_ini, fecha_fin, id_docente, id_precio, descripcion,libro, id_tipo ) 
-                                                 VALUES('$txt_nombre','$fecha_inicio','$fecha_fin','$slt_docente','$slt_precio','$txt_descripcion', $slt_libro, '$slt_tipo' )")or die($sql);
+            $sql = $this->db->query("INSERT INTO productos (id_categoria, cod_producto, nombre, id_costo) 
+                                                 VALUES('$slt_categoria','$txt_cod_pro','$txt_producto','$txt_costo')")or die($this->db->errno);
             
-            if(!$sql)//si no hay errores
+            if(!$this->db->errno)//si no hay errores
             {
-                $this->mensaje = "Se registro el curso correctamente...";
-		$this->msgTipo = "ok";
-		$this->estatus = true;
+                        $this->mensaje = "se almaceno correctamente el Producto...";
+			$this->msgTipo = "aviso";
+			$this->estatus = true;
+			$this->msgTitle = "Agregar Productos";
 	
+            }else{
+                $this->mensaje = "no se puedo almacenar el prodcucto Correctamente...";
+		$this->msgTipo = "alerta";
+		$this->estatus = false;
+                $this->msgTitle = "Agregar Productos";
             }
-                 $this->json = json_encode($this);
-		return $this->estatus;
+            return $this->estatus;
+                
         }  
          public function listar($id_categoria)
          {

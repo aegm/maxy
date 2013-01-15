@@ -19,7 +19,7 @@
 	$matriz['DESCRIPTION'] = "";
 	$matriz['BODY'] = "Inicio";
 	$matriz['ROOT_URL'] = ROOT_URL;
-	
+	$matriz['CSS'] .= $html->html("html/css.html",array("href"=>"css/form.css","media"=>"all"));
 	
 	
 	/********************************************* CONTENIDO *******************************************/	
