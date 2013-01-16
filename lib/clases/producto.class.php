@@ -96,12 +96,12 @@ class producto
              }
          }
          
-         public function listarOrden($id_persona){
+         public function listarCategoria($id_persona){
              
-              $sql = $this->db->query("select * from vordenes_pendienrtes where id_persona = '$id_persona'");
+              $sql = $this->db->query("select * from categoria_productos");
              if($sql->num_rows==0)
              {
-                        $this->mensaje = "No se encontraron Cursos...";
+                        $this->mensaje = "No se encontraron categorias...";
 			$this->msgTipo = "aviso";
 			$this->estatus = false;
 			$this->json = json_encode($this);

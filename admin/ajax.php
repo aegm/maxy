@@ -22,9 +22,14 @@
 	switch($a)
 	{
             case "listar-producutos":
-			$prod = new producto;
-			$prod->listar($cat);
-			echo $prod->json;
+                    $prod = new producto;
+                    $prod->listar($cat);
+                    echo $prod->json;
 		break;
+            case "listar-categorias":
+                    $prod = new producto;
+                    $prod->listarCategoria($cat);
+                    echo $prod->json;
+                break;
         }
 ?>
