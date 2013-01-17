@@ -65,4 +65,18 @@
     cursor: pointer;
 }
 
+.grid_name{
+    margin-top: 5px;
+    font-family: Arial;
+    color: #666666;
+    font-size: 11px;
+}
+
+.grid_price{
+    font-family: Arial;
+    color: #666666;
+    font-weight: bold;
+    font-size: 12px;
+}
+
 

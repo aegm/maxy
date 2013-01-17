@@ -38,12 +38,15 @@ class producto
             return $this->estatus;
                 
         }  
-         public function listar($id_categoria)
+         public function listar($id_categoria,$producto)
          {
              if($id_categoria)
-                 $completa_sql = "where id_categoria = '$id_categoria'";
+                 $completa_sql1 = "where id_categoria = '$id_categoria'";
              
-             $sql = $this->db->query("select * from productos");
+             if($producto)
+                 $completa_sql = "and id_producto = '$producto'";
+             
+             $sql = $this->db->query("select * from producto_item $completa_sql1 $completa_sql");
              if($sql->num_rows==0)
              {
                         $this->mensaje = "No se encontraron Producto...";

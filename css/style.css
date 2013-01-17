@@ -889,7 +889,8 @@ table td {
 
 .content article h1{font-family: "Courier New";
 color:#fff; 
-font-size:1.2em; text-shadow: 0.1em 0.1em #551a8b; background:#1f1f1f;
+font-size:1.2em; text-shadow: 0.1em 0.1em #551a8b;
+background-image: -webkit-linear-gradient(left , rgb(31,31,31) 20%, rgb(46,35,46) 30%, rgb(87,38,87) 88%);
 height:50px; line-height: 40px; width:100%; padding-left:2%; }
 
 article .backgroud{width: 100%; height: 100%;}

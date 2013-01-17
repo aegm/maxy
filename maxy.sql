@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50527
 File Encoding         : 65001
 
-Date: 2013-01-16 16:14:05
+Date: 2013-01-17 14:40:08
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -51,84 +51,17 @@ CREATE TABLE `ciudad` (
 INSERT INTO `ciudad` VALUES ('1', '1', 'Valencia');
 
 -- ----------------------------
--- Table structure for `colores`
+-- Table structure for `codigo_productos`
 -- ----------------------------
-DROP TABLE IF EXISTS `colores`;
-CREATE TABLE `colores` (
-  `id_color` int(10) NOT NULL AUTO_INCREMENT,
-  `color_rgb` varchar(20) DEFAULT NULL,
-  `color_web` varchar(20) NOT NULL,
-  `id_producto` int(10) DEFAULT NULL,
-  PRIMARY KEY (`id_color`),
-  KEY `Relationship28` (`id_producto`),
-  CONSTRAINT `Relationship28` FOREIGN KEY (`id_producto`) REFERENCES `productos` (`id_producto`) ON DELETE NO ACTION ON UPDATE NO ACTION
+DROP TABLE IF EXISTS `codigo_productos`;
+CREATE TABLE `codigo_productos` (
+  `codigo_producto` varchar(5) DEFAULT NULL,
+  `id_item` int(10) NOT NULL,
+  PRIMARY KEY (`id_item`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
--- Records of colores
--- ----------------------------
-
--- ----------------------------
--- Table structure for `entrada_conexion`
--- ----------------------------
-DROP TABLE IF EXISTS `entrada_conexion`;
-CREATE TABLE `entrada_conexion` (
-  `id_persona` int(10) DEFAULT NULL,
-  `id_entrada_conexion` int(10) NOT NULL,
-  `ip` char(20) NOT NULL,
-  PRIMARY KEY (`id_entrada_conexion`),
-  KEY `Relationship38` (`id_persona`),
-  CONSTRAINT `Relationship38` FOREIGN KEY (`id_persona`) REFERENCES `persona` (`id_persona`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- ----------------------------
--- Records of entrada_conexion
--- ----------------------------
-
--- ----------------------------
--- Table structure for `entrada_persona`
--- ----------------------------
-DROP TABLE IF EXISTS `entrada_persona`;
-CREATE TABLE `entrada_persona` (
-  `id_entrada_persona` int(4) NOT NULL,
-  `id_persona` int(10) DEFAULT NULL,
-  `usuario` int(15) DEFAULT NULL,
-  `id_color` int(10) DEFAULT NULL,
-  `fecha_entrada` date NOT NULL,
-  PRIMARY KEY (`id_entrada_persona`),
-  KEY `Relationship30` (`id_persona`,`usuario`),
-  KEY `Relationship31` (`id_color`),
-  CONSTRAINT `Relationship30` FOREIGN KEY (`id_persona`, `usuario`) REFERENCES `usuario` (`id_persona`, `usuario`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `Relationship31` FOREIGN KEY (`id_color`) REFERENCES `colores` (`id_color`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- ----------------------------
--- Records of entrada_persona
--- ----------------------------
-
--- ----------------------------
--- Table structure for `entrada_producto`
--- ----------------------------
-DROP TABLE IF EXISTS `entrada_producto`;
-CREATE TABLE `entrada_producto` (
-  `id_entrada_producto` int(10) NOT NULL,
-  `id_producto` int(10) DEFAULT NULL,
-  `id_categoria` int(10) DEFAULT NULL,
-  `id_marca` int(10) DEFAULT NULL,
-  `id_talla` int(10) DEFAULT NULL,
-  `id_color` int(10) DEFAULT NULL,
-  `id_persona` int(10) DEFAULT NULL,
-  PRIMARY KEY (`id_entrada_producto`),
-  KEY `Relationship32` (`id_producto`),
-  KEY `Relationship33` (`id_categoria`),
-  KEY `Relationship34` (`id_marca`),
-  KEY `Relationship35` (`id_talla`),
-  KEY `Relationship36` (`id_color`),
-  KEY `Relationship37` (`id_persona`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- ----------------------------
--- Records of entrada_producto
+-- Records of codigo_productos
 -- ----------------------------
 
 -- ----------------------------
@@ -207,15 +140,16 @@ CREATE TABLE `formularios_botones` (
   PRIMARY KEY (`id_boton`),
   KEY `formularios_botones_ibfk_1` (`id_formulario`),
   CONSTRAINT `formularios_botones_ibfk_1` FOREIGN KEY (`id_formulario`) REFERENCES `formularios` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
 
 -- ----------------------------
 -- Records of formularios_botones
 -- ----------------------------
 INSERT INTO `formularios_botones` VALUES ('1', 'frm_filtro', 'Filtrar', 'button', 'Buscar', 'gg-button', '0', '1');
 INSERT INTO `formularios_botones` VALUES ('2', 'frm_filtro', 'agregar', 'button', 'Agregar Nuevo', 'gg-button', '0', '2');
-INSERT INTO `formularios_botones` VALUES ('3', 'frm_filtro', 'limpiar', 'reset', 'Limpiar', 'gg-button', '0', '3');
+INSERT INTO `formularios_botones` VALUES ('3', 'frm_filtro', 'limpiar', 'reset', 'Limpiar', 'gg-button', '0', '4');
 INSERT INTO `formularios_botones` VALUES ('4', 'frm_agregar', 'btn_agregar', 'submit', 'Agregar Nuevo', 'gg-button', '0', '1');
+INSERT INTO `formularios_botones` VALUES ('5', 'frm_filtro', 'btn_item', 'button', 'Agregar Item', 'gg-button', '0', '3');
 
 -- ----------------------------
 -- Table structure for `formularios_campos`
@@ -239,20 +173,31 @@ CREATE TABLE `formularios_campos` (
   `datos` varchar(50) NOT NULL,
   `datos_value` varchar(20) NOT NULL,
   PRIMARY KEY (`id_campo`)
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
 
 -- ----------------------------
 -- Records of formularios_campos
 -- ----------------------------
 INSERT INTO `formularios_campos` VALUES ('1', 'frm_filtro', 'select', 'FILTRO DE BUSQUEDA', 'slt_categoria', 'slt_categoria', 'categoria', ' ', 'text vobli', ' ', '1', '0', '0', '1', 'categoria_productos', 'id_categoria');
 INSERT INTO `formularios_campos` VALUES ('2', 'frm_filtro', 'select', 'FILTRO DE BUSQUEDA', 'slt_producto', 'slt_producto', 'Productos', ' ', 'text vobli', ' ', '1', '0', '0', '2', '', '');
-INSERT INTO `formularios_campos` VALUES ('3', 'frm_agregar', 'select', 'DATOS DEL  PRODUCTO', 'slt_categoria', 'slt_categoria', 'categoria', ' ', 'text vobli', ' ', '1', '0', '0', '1', 'categoria_productos', 'id_categoria');
 INSERT INTO `formularios_campos` VALUES ('4', 'frm_agregar', 'text', 'DATOS DEL  PRODUCTO', 'txt_producto', 'txt_producto', 'producto', '', 'text vobli', 'Nombre del Producto', '1', '0', '0', '2', 'categoria_productos', 'id_categoria');
-INSERT INTO `formularios_campos` VALUES ('5', 'frm_agregar', 'text', 'DATOS DEL  PRODUCTO', 'txt_costo', 'txt_costo', 'Costo', '', 'text vobli', 'Costo del Producto', '1', '0', '0', '3', '', '');
-INSERT INTO `formularios_campos` VALUES ('6', 'frm_agregar', 'select', 'DATOS DEL  PRODUCTO', 'slt_talla', 'slt_talla', 'Talla', '', 'text vobli', 'Talla del Producto', '1', '0', '0', '4', 'tallas', 'id_talla');
-INSERT INTO `formularios_campos` VALUES ('7', 'frm_agregar', 'text', 'DATOS DEL  PRODUCTO', 'txt_color', 'txt_color', 'Color', '', 'text vobli', 'Color del Producto ', '1', '0', '0', '5', '', '');
 INSERT INTO `formularios_campos` VALUES ('8', 'frm_agregar', 'hidden', 'DATOS DEL  PRODUCTO', 'form', 'form', '', 'agregar-producto', 'text vobli', ' ', '1', '0', '0', '5', '', '');
-INSERT INTO `formularios_campos` VALUES ('9', 'frm_agregar', 'text', 'DATOS DEL  PRODUCTO', 'txt_cod_pro', 'txt_cod_pro', 'Codigo', '', 'text vobli', 'Codigo del producto', '1', '0', '0', '5', '', '');
+INSERT INTO `formularios_campos` VALUES ('10', 'frm_agregar', 'hidden', 'DATOS DEL  PRODUCTO', 'hdd_categoria', 'hdd_categoria', '', '', 'text vobli', ' ', '1', '0', '0', '2', '', '');
+
+-- ----------------------------
+-- Table structure for `imagen_producto`
+-- ----------------------------
+DROP TABLE IF EXISTS `imagen_producto`;
+CREATE TABLE `imagen_producto` (
+  `id_imagen` int(10) NOT NULL AUTO_INCREMENT,
+  `imagen` varchar(50) NOT NULL,
+  `id_item` int(10) DEFAULT NULL,
+  PRIMARY KEY (`id_imagen`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of imagen_producto
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for `menu`
@@ -320,30 +265,50 @@ CREATE TABLE `productos` (
   `id_categoria` int(10) DEFAULT NULL,
   `cod_producto` int(20) DEFAULT NULL,
   `nombre` varchar(50) DEFAULT NULL,
-  `id_costo` int(10) DEFAULT NULL,
-  PRIMARY KEY (`id_producto`)
-) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8;
+  PRIMARY KEY (`id_producto`),
+  KEY `categoria_producto` (`id_categoria`),
+  CONSTRAINT `categoria_producto` FOREIGN KEY (`id_categoria`) REFERENCES `categoria_productos` (`id_categoria`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of productos
 -- ----------------------------
-INSERT INTO `productos` VALUES ('20', '1', '2', 'asd', '1000');
 
 -- ----------------------------
--- Table structure for `producto_talla`
+-- Table structure for `producto_item`
 -- ----------------------------
-DROP TABLE IF EXISTS `producto_talla`;
-CREATE TABLE `producto_talla` (
-  `id_producto` int(10) NOT NULL,
-  `id_talla` int(10) NOT NULL,
-  PRIMARY KEY (`id_producto`,`id_talla`),
-  KEY `Relationship16` (`id_talla`),
-  CONSTRAINT `Relationship16` FOREIGN KEY (`id_talla`) REFERENCES `tallas` (`id_talla`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `Relationship15` FOREIGN KEY (`id_producto`) REFERENCES `productos` (`id_producto`) ON DELETE NO ACTION ON UPDATE NO ACTION
+DROP TABLE IF EXISTS `producto_item`;
+CREATE TABLE `producto_item` (
+  `id_item` int(10) NOT NULL AUTO_INCREMENT,
+  `nombre` varchar(50) DEFAULT NULL,
+  `id_producto` int(10) DEFAULT NULL,
+  `color` char(20) DEFAULT NULL,
+  `id_talla` int(10) DEFAULT NULL,
+  `id_promocion` int(10) DEFAULT NULL,
+  `costo` varchar(30) DEFAULT NULL,
+  PRIMARY KEY (`id_item`),
+  KEY `talla_producto` (`id_talla`),
+  KEY `item_promocion` (`id_promocion`),
+  CONSTRAINT `item_promocion` FOREIGN KEY (`id_promocion`) REFERENCES `promociones` (`id_promocion`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `talla_producto` FOREIGN KEY (`id_talla`) REFERENCES `tallas` (`id_talla`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of producto_item
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for `promociones`
+-- ----------------------------
+DROP TABLE IF EXISTS `promociones`;
+CREATE TABLE `promociones` (
+  `id_promocion` int(10) NOT NULL AUTO_INCREMENT,
+  `promocion` int(2) NOT NULL,
+  PRIMARY KEY (`id_promocion`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
--- Records of producto_talla
+-- Records of promociones
 -- ----------------------------
 
 -- ----------------------------
@@ -464,3 +429,12 @@ CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW 
 -- ----------------------------
 DROP VIEW IF EXISTS `vusuarios`;
 CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `vusuarios` AS select `u`.`id_persona` AS `id_persona`,`u`.`id_grupo` AS `id_grupo`,`p`.`identificacion` AS `identificacion`,`p`.`nombre` AS `nombre`,`p`.`apellido` AS `apellido`,`g`.`nombre` AS `grupo`,`u`.`usuario` AS `usuario`,`u`.`clave` AS `clave`,`p`.`correo` AS `correo` from ((`usuario` `u` join `persona` `p`) join `usuarios_grupos` `g`) where ((`p`.`id_persona` = `u`.`id_persona`) and (`u`.`id_grupo` = `g`.`id_grupo`)) ;
+DROP TRIGGER IF EXISTS `item_productos`;
+DELIMITER ;;
+CREATE TRIGGER `item_productos` AFTER INSERT ON `producto_item` FOR EACH ROW BEGIN
+SET @PRUEBA = NEW.id_item;
+insert into codigo_productos (id_item,codigo_producto) values(@PRUEBA,LPAD(@PRUEBA,'5','0'));
+insert into imagen_producto (imagen,id_item) values (CONCAT('imagen/productos/',LPAD(@PRUEBA, '5', '0')),@PRUEBA);
+END
+;;
+DELIMITER ;

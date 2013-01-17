@@ -21,14 +21,20 @@ $(document).ready(function(){
   $(".oculto").hide();        
  });
     $("#agregar").click(function(){
-          var nodo = $('.mo'); 
+        /*  var nodo = $('.mo'); 
           if ($(nodo).is(":visible")){
                //$(nodo).hide();
                //$('.oculto').show();
                $(nodo).fadeToggle( "slow" );
                $('.oculto').fadeToggle( "slow" );
                return false;
-          }
+          }*/
+        $( "#frm_agregar" ).dialog({
+            height: 'auto',
+            title:'Agregar Producto',
+            width: 600,
+            modal: true
+        });
     });
 
   

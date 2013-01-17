@@ -2,7 +2,6 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-
 $(document).ready(function(){
    $(function(){
       //LISTANDO LAS CATEGORIAS 
@@ -24,7 +23,9 @@ $(document).ready(function(){
 	},"json"); 
    });
    
-   $('#slt-categoria').change(function(){
-      productos($(this).val(),'#slt-producto');   
+   $('#slt_categoria').change(function(){
+      productos($(this).val(),'#slt_producto');   
    });
+   
+   $('#')
 });
