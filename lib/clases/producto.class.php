@@ -16,15 +16,36 @@ class producto
 	}
 	//*****************************************************
 	
-        public function guardar($slt_categoria,$txt_producto,$txt_costo,$slt_talla,$txt_color,$txt_cod_pro)
+        public function guardar($hdd_categoria,$producto)
         {
             
-            $sql = $this->db->query("INSERT INTO productos (id_categoria, cod_producto, nombre, id_costo) 
-                                                 VALUES('$slt_categoria','$txt_cod_pro','$txt_producto','$txt_costo')")or die($this->db->errno);
+            $guardar = $this->db->query("INSERT INTO productos (id_categoria, nombre) 
+                                                 VALUES('$hdd_categoria','$producto')")or die($this->db->errno);
             
             if(!$this->db->errno)//si no hay errores
             {
                         $this->mensaje = "se almaceno correctamente el Producto...";
+			$this->msgTipo = "aviso";
+			$this->estatus = true;
+			$this->msgTitle = "Agregar Productos";
+	
+            }else{
+                $this->mensaje = "no se puedo almacenar el item correctamente...";
+		$this->msgTipo = "alerta";
+		$this->estatus = false;
+                $this->msgTitle = "Agregar Productos";
+            }
+            return $this->estatus;
+                
+        }  
+        
+        public function guardarItem($txt_producto, $txt_color, $txt_talla, $txt_promocion, $txt_costo, $hdd_producto){
+              $guardar = $this->db->query("INSERT INTO producto_item (nombre, id_producto, color, id_talla, id_promocion, costo) 
+                                                 VALUES('$txt_producto','$hdd_producto','$txt_color','$txt_talla','$txt_promocion','$txt_costo')")or die($this->db->errno);
+            
+            if(!$this->db->errno)//si no hay errores
+            {
+                        $this->mensaje = "se almaceno correctamente el Item del Producto...";
 			$this->msgTipo = "aviso";
 			$this->estatus = true;
 			$this->msgTitle = "Agregar Productos";
@@ -37,7 +58,7 @@ class producto
             }
             return $this->estatus;
                 
-        }  
+        }
          public function listar($id_categoria,$producto)
          {
              if($id_categoria)
@@ -46,7 +67,7 @@ class producto
              if($producto)
                  $completa_sql = "and id_producto = '$producto'";
              
-             $sql = $this->db->query("select * from producto_item $completa_sql1 $completa_sql");
+             $sql = $this->db->query("select * from productos $completa_sql1 $completa_sql");
              if($sql->num_rows==0)
              {
                         $this->mensaje = "No se encontraron Producto...";

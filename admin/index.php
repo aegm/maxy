@@ -21,10 +21,11 @@
 	$matriz['DESCRIPTION']="";
 	$matriz['BODY']="inicio";
 	$matriz['JS'].="";
+        $array['ROOT_URL'] = ROOT_URL;
 	
 	/********************************************* CONTENIDO *******************************************/	
 	
-	
+	 $matriz['CONTENIDO'] = $html->html("html/$archivo.html",$array);
 	/***************************************** MATRIZ **************************************************/
 	
         //print_r($menu->datos);

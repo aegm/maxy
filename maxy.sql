@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50527
 File Encoding         : 65001
 
-Date: 2013-01-17 14:40:08
+Date: 2013-01-21 11:22:56
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -63,6 +63,8 @@ CREATE TABLE `codigo_productos` (
 -- ----------------------------
 -- Records of codigo_productos
 -- ----------------------------
+INSERT INTO `codigo_productos` VALUES ('00011', '11');
+INSERT INTO `codigo_productos` VALUES ('00012', '12');
 
 -- ----------------------------
 -- Table structure for `estado`
@@ -100,6 +102,7 @@ CREATE TABLE `formularios` (
 -- ----------------------------
 INSERT INTO `formularios` VALUES ('frm_agregar', 'Agregar de Productos', 'form_process.php', 'post', 'application/x-www-form-urlencoded', 'form', 'agregar-producto');
 INSERT INTO `formularios` VALUES ('frm_filtro', 'Busqueda de Productos', 'form_process.php', 'post', 'application/x-www-form-urlencoded', 'form', 'filtro-producto');
+INSERT INTO `formularios` VALUES ('frm_producto_item', 'Busqueda de Productos', 'form_process.php', 'post', 'application/x-www-form-urlencoded', 'form', 'producto-item');
 
 -- ----------------------------
 -- Table structure for `formularios_adicional`
@@ -140,7 +143,7 @@ CREATE TABLE `formularios_botones` (
   PRIMARY KEY (`id_boton`),
   KEY `formularios_botones_ibfk_1` (`id_formulario`),
   CONSTRAINT `formularios_botones_ibfk_1` FOREIGN KEY (`id_formulario`) REFERENCES `formularios` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
 
 -- ----------------------------
 -- Records of formularios_botones
@@ -150,6 +153,8 @@ INSERT INTO `formularios_botones` VALUES ('2', 'frm_filtro', 'agregar', 'button'
 INSERT INTO `formularios_botones` VALUES ('3', 'frm_filtro', 'limpiar', 'reset', 'Limpiar', 'gg-button', '0', '4');
 INSERT INTO `formularios_botones` VALUES ('4', 'frm_agregar', 'btn_agregar', 'submit', 'Agregar Nuevo', 'gg-button', '0', '1');
 INSERT INTO `formularios_botones` VALUES ('5', 'frm_filtro', 'btn_item', 'button', 'Agregar Item', 'gg-button', '0', '3');
+INSERT INTO `formularios_botones` VALUES ('6', 'frm_producto_item', 'btn_agregar', 'submit', 'Guardar', 'gg-button', '0', '1');
+INSERT INTO `formularios_botones` VALUES ('7', 'frm_producto_item', 'btn_agregar', 'reset', 'Limpiar', 'gg-button', '0', '1');
 
 -- ----------------------------
 -- Table structure for `formularios_campos`
@@ -173,7 +178,7 @@ CREATE TABLE `formularios_campos` (
   `datos` varchar(50) NOT NULL,
   `datos_value` varchar(20) NOT NULL,
   PRIMARY KEY (`id_campo`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
+) ENGINE=InnoDB AUTO_INCREMENT=27 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
 
 -- ----------------------------
 -- Records of formularios_campos
@@ -183,6 +188,14 @@ INSERT INTO `formularios_campos` VALUES ('2', 'frm_filtro', 'select', 'FILTRO DE
 INSERT INTO `formularios_campos` VALUES ('4', 'frm_agregar', 'text', 'DATOS DEL  PRODUCTO', 'txt_producto', 'txt_producto', 'producto', '', 'text vobli', 'Nombre del Producto', '1', '0', '0', '2', 'categoria_productos', 'id_categoria');
 INSERT INTO `formularios_campos` VALUES ('8', 'frm_agregar', 'hidden', 'DATOS DEL  PRODUCTO', 'form', 'form', '', 'agregar-producto', 'text vobli', ' ', '1', '0', '0', '5', '', '');
 INSERT INTO `formularios_campos` VALUES ('10', 'frm_agregar', 'hidden', 'DATOS DEL  PRODUCTO', 'hdd_categoria', 'hdd_categoria', '', '', 'text vobli', ' ', '1', '0', '0', '2', '', '');
+INSERT INTO `formularios_campos` VALUES ('19', 'frm_producto_item', 'text', 'DATOS DEL  PRODUCTO', 'txt_producto', 'txt_producto', 'producto', '', 'text vobli', 'Nombre del Producto', '1', '0', '0', '1', '', '');
+INSERT INTO `formularios_campos` VALUES ('20', 'frm_producto_item', 'text', 'DATOS DEL  PRODUCTO', 'txt_color', 'txt_color', 'Color', '', 'text vobli', 'Color del Producto', '1', '0', '0', '1', '', '');
+INSERT INTO `formularios_campos` VALUES ('21', 'frm_producto_item', 'select', 'DATOS DEL  PRODUCTO', 'txt_talla', 'txt_talla', 'Talla', '', 'text vobli', 'Talla del Producto', '1', '0', '0', '3', 'tallas', 'id_talla');
+INSERT INTO `formularios_campos` VALUES ('22', 'frm_producto_item', 'select', 'DATOS DEL  PRODUCTO', 'txt_promocion', 'txt_promocion', 'Promocion', '', 'text vobli', 'Promocion del Producto', '1', '0', '0', '4', 'promociones', 'id_promocion');
+INSERT INTO `formularios_campos` VALUES ('23', 'frm_producto_item', 'text', 'DATOS DEL  PRODUCTO', 'txt_costo', 'txt_costo', 'Costo', '', 'text vobli', 'Cosoto del Producto', '1', '0', '0', '4', '', '');
+INSERT INTO `formularios_campos` VALUES ('24', 'frm_producto_item', 'hidden', 'DATOS DEL  PRODUCTO', 'hdd_categorias', 'hdd_categorias', '', '', 'text vobli', '', '1', '0', '0', '1', '', '');
+INSERT INTO `formularios_campos` VALUES ('25', 'frm_producto_item', 'hidden', 'DATOS DEL  PRODUCTO', 'hdd_producto', 'hdd_producto', '', '', 'text vobli', '', '1', '0', '0', '2', '', '');
+INSERT INTO `formularios_campos` VALUES ('26', 'frm_producto_item', 'hidden', 'DATOS DEL  PRODUCTO', 'form', 'form', '', 'agregar-item', 'text vobli', '', '1', '0', '0', '3', '', '');
 
 -- ----------------------------
 -- Table structure for `imagen_producto`
@@ -193,11 +206,13 @@ CREATE TABLE `imagen_producto` (
   `imagen` varchar(50) NOT NULL,
   `id_item` int(10) DEFAULT NULL,
   PRIMARY KEY (`id_imagen`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of imagen_producto
 -- ----------------------------
+INSERT INTO `imagen_producto` VALUES ('3', 'imagen/productos/00011', '11');
+INSERT INTO `imagen_producto` VALUES ('4', 'imagen/productos/00012', '12');
 
 -- ----------------------------
 -- Table structure for `menu`
@@ -263,16 +278,16 @@ DROP TABLE IF EXISTS `productos`;
 CREATE TABLE `productos` (
   `id_producto` int(10) NOT NULL AUTO_INCREMENT,
   `id_categoria` int(10) DEFAULT NULL,
-  `cod_producto` int(20) DEFAULT NULL,
   `nombre` varchar(50) DEFAULT NULL,
   PRIMARY KEY (`id_producto`),
   KEY `categoria_producto` (`id_categoria`),
   CONSTRAINT `categoria_producto` FOREIGN KEY (`id_categoria`) REFERENCES `categoria_productos` (`id_categoria`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of productos
 -- ----------------------------
+INSERT INTO `productos` VALUES ('3', '1', 'JEANS');
 
 -- ----------------------------
 -- Table structure for `producto_item`
@@ -291,11 +306,13 @@ CREATE TABLE `producto_item` (
   KEY `item_promocion` (`id_promocion`),
   CONSTRAINT `item_promocion` FOREIGN KEY (`id_promocion`) REFERENCES `promociones` (`id_promocion`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `talla_producto` FOREIGN KEY (`id_talla`) REFERENCES `tallas` (`id_talla`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of producto_item
 -- ----------------------------
+INSERT INTO `producto_item` VALUES ('11', 'LEGGIN EFECTO TEJANO', '3', '0f040f', '2', '1', '2000');
+INSERT INTO `producto_item` VALUES ('12', 'LEGGING CINTURA GOMA', '3', '0a050a', '1', '1', '2500');
 
 -- ----------------------------
 -- Table structure for `promociones`
@@ -303,13 +320,18 @@ CREATE TABLE `producto_item` (
 DROP TABLE IF EXISTS `promociones`;
 CREATE TABLE `promociones` (
   `id_promocion` int(10) NOT NULL AUTO_INCREMENT,
-  `promocion` int(2) NOT NULL,
+  `nombre` int(2) NOT NULL,
   PRIMARY KEY (`id_promocion`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of promociones
 -- ----------------------------
+INSERT INTO `promociones` VALUES ('1', '10');
+INSERT INTO `promociones` VALUES ('2', '20');
+INSERT INTO `promociones` VALUES ('3', '30');
+INSERT INTO `promociones` VALUES ('4', '40');
+INSERT INTO `promociones` VALUES ('5', '50');
 
 -- ----------------------------
 -- Table structure for `tallas`

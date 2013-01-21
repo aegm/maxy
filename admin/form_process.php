@@ -19,7 +19,7 @@ if(isset($_POST)&&count($_POST)){
 	switch($_POST['form']){
             case 'agregar-producto':
                 $productos = new producto;
-                $productos->guardar($slt_categoria,$txt_producto,$txt_costo,$slt_talla,$txt_color,$txt_cod_pro);
+                $productos->guardar($hdd_categoria,$txt_producto);
                 $_SESSION['mensaje']=$productos->mensaje;
                 $_SESSION['msgTipo']=$productos->msgTipo;
                 $_SESSION['msgTitle']=$productos->msgTitle;
@@ -27,6 +27,17 @@ if(isset($_POST)&&count($_POST)){
                 $error_redirect_to = 'administrar.php';
                 $ty_redirect_to = 'administrar.php';
                 break;
+            case 'agregar-item':
+                $productos = new producto;
+                $productos->guardarItem($txt_producto, $txt_color, $txt_talla, $txt_promocion, $txt_costo, $hdd_producto);
+                $_SESSION['mensaje']=$productos->mensaje;
+                $_SESSION['msgTipo']=$productos->msgTipo;
+                $_SESSION['msgTitle']=$productos->msgTitle;
+
+                $error_redirect_to = 'administrar.php';
+                $ty_redirect_to = 'administrar.php';
+                break;
+                
             default:
 			$_SESSION['mensaje'] = 'Formulario especificado no es válido. Póngase en contacto con nosotros si tiene alguna pregunta.';
 			$_SESSION['msgTipo']="error";

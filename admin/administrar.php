@@ -32,6 +32,7 @@
         $array['FORMULARIO'] = formulario_html("frm_filtro");
         //FORMULARIO PARA AGREGAR PRODUCTO
         $array['FORMULARIO_AGREGAR'] = formulario_html("frm_agregar");
+        $array['FORMULARIO_PROMOCIONES'] = formulario_html("frm_producto_item");
         
         
         $matriz['CONTENIDO'] = $html->html("html/$archivo.html",$array);
