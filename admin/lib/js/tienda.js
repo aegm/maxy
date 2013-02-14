@@ -10,7 +10,7 @@ $(document).ready(function(){
 		{
 			var html ='<option value="">Seleccione</option>';
 					$.each(data.datos, function(i,item){
-						html+='<option value="'+item.id_estado+'">'+item.nombre+'</option>';
+						html+='<option value="'+item.id_categoria+'">'+item.nombre+'</option>';
 					});
 				html +=  '</select>';
 			 html;	
@@ -23,9 +23,17 @@ $(document).ready(function(){
 	},"json"); 
    });
    
-   $('#slt_categoria').change(function(){
+   $('#slt-categoria').change(function(){
       productos($(this).val(),'#slt_producto');   
    });
    
-   $('#')
+   $('#btn-buscar').click(function(){
+       var cat = $('#slt-categoria').val();
+       var pro = $('#slt_producto').val();
+       $.post("ajax.php",{a: "listar-imagen", cat:cat,pro:pro}, function(data){
+            if (data.estatus){
+               alert(data.imgFile);
+           }
+       },"json");
+   });
 });

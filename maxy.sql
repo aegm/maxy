@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50527
 File Encoding         : 65001
 
-Date: 2013-01-21 11:22:56
+Date: 2013-02-14 16:25:35
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -282,7 +282,7 @@ CREATE TABLE `productos` (
   PRIMARY KEY (`id_producto`),
   KEY `categoria_producto` (`id_categoria`),
   CONSTRAINT `categoria_producto` FOREIGN KEY (`id_categoria`) REFERENCES `categoria_productos` (`id_categoria`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of productos
@@ -373,7 +373,7 @@ CREATE TABLE `usuario` (
 -- ----------------------------
 -- Records of usuario
 -- ----------------------------
-INSERT INTO `usuario` VALUES ('1', '2', '17030621', '1234', '2012-11-29', '1');
+INSERT INTO `usuario` VALUES ('1', '2', '16595338', '1234', '2012-11-29', '1');
 
 -- ----------------------------
 -- Table structure for `usuarios_accesos`

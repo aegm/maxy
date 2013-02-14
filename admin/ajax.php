@@ -6,6 +6,7 @@
 	require_once("../lib/clases/dbi.class.php");
         require_once("../lib/clases/usuario.class.php");
         require_once("../lib/clases/producto.class.php");
+        require_once("../lib/clases/image.class.php");
         $user = new usuario;
 	if(!$user->session())
 	{
@@ -30,6 +31,11 @@
                     $prod = new producto;
                     $prod->listarCategoria($cat);
                     echo $prod->json;
+                break;
+            case 'listar-imagen':
+                    $img = new image;
+                    $img->listar($cat, $pro);
+                    echo $img->json;                           
                 break;
         }
 ?>
