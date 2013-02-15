@@ -21,10 +21,9 @@
 	$matriz['KEYWORDS']="";
 	$matriz['DESCRIPTION']="";
 	$matriz['BODY']="inicio";
-	$matriz['JS'] .= $html->html("../html/js.html",array("src"=>"../lib/js/colorpicker.js"));
-        $matriz['CSS'] .= $html->html("../html/css.html",array("href"=>"../css/form.css","media"=>"all"));
+	$matriz['CSS'] .= $html->html("../html/css.html",array("href"=>"../css/form.css","media"=>"all"));
         $matriz['CSS'] .= $html->html("../html/css.html",array("href"=>"../css/colorpicker.css","media"=>"all"));
-        
+        $matriz['JS'] .= $html->html("../html/js.html",array("src"=>"../lib/js/colorpicker.js"));
 	
 	/********************************************* CONTENIDO *******************************************/	
 	//formulario de busqueda

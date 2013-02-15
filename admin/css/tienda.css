@@ -79,4 +79,10 @@
     font-size: 12px;
 }
 
+.img_container{
+    position: relative;
+    width: 100%;
+    min-height: 610px;
+    overflow: hidden;
+    }
 

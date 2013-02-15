@@ -192,8 +192,8 @@ class image {
      }
      public function listar($cat, $pro,$item)
      {
-       $cat = 'ropa';
-       $pro = 'jeans';
+      // $cat = 'ropa';
+       //$pro = 'jeans';
          //raiz de apertura
          $raiz = $_SERVER['DOCUMENT_ROOT']."/maxy/img/ropa/";
          if(is_dir($raiz.$cat."/".$pro."/"))

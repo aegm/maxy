@@ -17,9 +17,9 @@
 	$matriz['KEYWORDS']="";
 	$matriz['DESCRIPTION']="";
 	$matriz['BODY']="inicio";
-        $matriz['CSS'] .= $html->html("../html/css.html",array("href"=>"../css/form.css","media"=>"all"));
-      
-        
+        $matriz['CSS'] .= $html->html("../html/css.html",array("href"=>"../css/perfect-scrollbar.css","media"=>"all"));
+        $matriz['JS'] .= $html->html("../html/js.html",array("src"=>"../lib/js/perfect-scrollbar.js"));
+        $matriz['JS'] .= $html->html("../html/js.html",array("src"=>"../lib/js/jquery.mousewheel.js"));
 	
 	
 	/********************************************* CONTENIDO *******************************************/	

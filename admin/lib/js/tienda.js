@@ -4,6 +4,8 @@
  */
 $(document).ready(function(){
    $(function(){
+       
+      $('#imagenes').perfectScrollbar(0);
       //LISTANDO LAS CATEGORIAS 
       $.post("ajax.php",{a: "listar-categorias"}, function(data){
 		if(data.estatus)
@@ -32,7 +34,17 @@ $(document).ready(function(){
        var pro = $('#slt_producto').val();
        $.post("ajax.php",{a: "listar-imagen", cat:cat,pro:pro}, function(data){
             if (data.estatus){
-               alert(data.imgFile);
+                    var html ='';
+                    $.each(data.imgFile, function(i,item){
+                            html+='<a class="grid_itemContainer">';
+                            html+='<div class="grid_imageContainer">';
+                            html+='<img src=http://localhost/maxy/img/ropa/'+cat+'/'+pro+'/'+item+' class="grid_imagencarrusel">'; 
+                            html+='<div class="grid_name">ABRIGO MILITAR JACQUARD</div>';
+                            html+='<div class="grid_price"><span class="currency">VEF&nbsp;</span><span class="integer">1.299</span><span class="decimals">,00</span></div>';
+                            html+='</a>';
+                    });
+
+                    $('#imagenes').html(html);
            }
        },"json");
    });
